@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Configuring error flags for bash
+set -o errexit
+set -o pipefail
+set -o nounset
+
+
+# Test connection to the Postgresql database. 
+# should return 0 if success (need of the bash script)
+# use environment variables to try to connect (.env)
+postgres_ready() {
+# run python code
+python << END_PYTHON
+import sys
+import psycopg2
+try:
+    psycopg2.connect(
+        dbname="${POSTGRES_DB}",
+        user="${POSTGRES_USER}",
+        password="${POSTGRES_PASSWORD}",
+        host="${POSTGRES_HOST}",
+        port="${POSTGRES_PORT}",
+    )
+except psycopg2.OperationalError as e:
+    print(e)
+    sys.exit(-1)
+sys.exit(0)
+END_PYTHON
+}
+
+# wait until the database is ready (postgres_ready() function returns 0)
+until postgres_ready; do
+  >&2 echo 'Waiting for PostgreSQL...'
+  sleep 1
+done
+
+>&2 echo 'PostgreSQL is runing !'
+
+# Running /start file received as a parameter
+exec "$@"

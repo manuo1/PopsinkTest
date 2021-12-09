@@ -1,0 +1,6 @@
+POSTGRES_USER=popsink
+POSTGRES_PASSWORD=your_password
+POSTGRES_DB=popsink
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+SECRET_KEY=your_secret_key

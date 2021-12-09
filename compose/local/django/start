@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Configuring error flags for bash
+set -o errexit
+set -o pipefail
+set -o nounset
+
+# run migrations and python development server
+python manage.py migrate
+python manage.py runserver 0.0.0.0:8000

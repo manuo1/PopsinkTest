@@ -2,11 +2,30 @@ version: "3"
 
 services:
 
+    django:
+        build:
+            context: .
+            dockerfile: ./compose/local/django/Dockerfile
+        image: popsink_backend_local_django
+        container_name: django_backend
+        depends_on:
+            - postgres
+        volumes:
+            - .:/django_backend
+        env_file: 
+            - ./.env
+        ports:
+            - 8000:8000
+        command: /start
+
     postgres:
         image: postgres:14
         container_name: postgres
         env_file: 
-            -
-                 ./.env
-        ports:
-            - 15432:5432
+            - ./.env
+        volumes:
+            - local_postgres_data:/var/lib/postgresql/data
+        
+
+volumes:
+    local_postgres_data: {}

@@ -11,8 +11,8 @@ lazy-object-proxy==1.6.0
 Markdown==3.3.6
 mccabe==0.6.1
 pep8==1.7.1
-pkg_resources==0.0.0
 platformdirs==2.4.0
+psycopg2==2.9.2
 pycodestyle==2.8.0
 pylint==2.12.2
 pylint-django==2.4.4
